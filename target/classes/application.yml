@@ -1,0 +1,59 @@
+#yml的赋值使用 yml可以在这里面存储对象里面还会有使用el表达式 这是properties不能够的
+Dog:
+  name: 大花狗
+  age: 19
+
+
+Person:
+  name: 余生
+  age: ${random.int}
+  height: 1.62
+  maps: {k1: k1,k2: k2}
+  lists: #[a1,a2] 数组第一种赋值方式
+    happy
+    zz # 第二种赋值方式 mapper也可以这样赋值
+  dog:
+    name: daheigou
+    age: 19
+  email: 2545763087@qq.com
+
+
+
+
+spring:
+  profiles:
+    active: shiroText #选择激活哪套配置
+
+---
+server:
+  port: 9091
+spring:
+  profiles: test #测试环境 -- 给这套配置取名字
+
+---
+server:
+  port: 9092
+spring:
+  profiles: dev #开发环境
+---
+spring:
+  profiles: shiroText
+  datasource:
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+    filters: stat,log4j,wall
+    url: jdbc:mysql://localhost:3306/shirodb?characterEncoding=UTF-8&serverTimezone=GMT&useUnicode=true
+
+
+---
+spring:
+  profiles: securityText
+  datasource:
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+    filters: stat,log4j,wall
+    url: jdbc:mysql://localhost:3306/db2?characterEncoding=UTF-8&serverTimezone=GMT&useUnicode=true

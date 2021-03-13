@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>首页</title>
+    <style type="text/css">
+        body{
+            margin: 0 auto;
+            padding: 0px;
+        }
+
+      #one{
+          border: solid 1px pink;
+          margin-top: 20px;
+          margin-left: 30px;
+          margin-right: 30px;
+          height: 40px;
+          font-size: 18px;
+          font-family: 微软雅黑;
+      }
+    #two{
+        border: solid 1px pink;
+        margin-top: 20px;
+        margin-left: 30px;
+        margin-right: 30px;
+        height: 60px;
+        font-size: 20px;
+        font-family: 华文彩云;
+    }
+        #two p{
+            text-align: center;
+        }
+        a{
+            text-decoration: none;
+            color: black;
+        }
+
+        #three{
+            width: 1200px;
+            height: 500px;
+            margin-top: 50px;
+            margin-left: 150px;
+            margin-right: 30px;
+        }
+
+        #three div{
+            width: 200px;
+            height: 400px;
+            border: solid 1px powderblue;
+            margin-left: 100px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<div id="one">
+    <a style="float: left;padding-left: 30px;padding-top: 5px" th:href="@{springSecurity/index}">首页</a>
+
+    <!-- 如果登陆显示注销按钮 -->
+    <div sec:authorize="isAuthenticated()">
+        <a style="float: right;padding-right: 30px;padding-top: 5px" th:href="@{/logout}">注销</a>
+        <p style="float: right;padding-right: 30px;padding-top: 5px">用户名：<span sec:authentication="name"></span></p>
+    </div>
+            <!-- 如果未登陆显示登陆按钮 -->
+    <div sec:authorize="!isAuthenticated()">
+        <a style="float: right;padding-right: 30px;padding-top: 5px" th:href="@{springSecurity/tolog}">登陆</a>
+    </div>
+
+
+    <div class="clear" style="clear: both"></div>
+</div>
+    <div id="two">
+        <p>Spring Security by 余生</p>
+    </div>
+<div id="three">
+              <!-- 动态加载功能栏 有权限才加载改功能栏 -->
+    <div style="float: left" sec:authorize="hasAnyRole('vip1')">
+        <p class="title">level1</p>
+        <hr/>
+        <a th:href="@{springSecurity/level1/1}">1.html</a>
+        <br/>
+        <a th:href="@{springSecurity/level1/2}">2.html</a>
+        <br/>
+        <a th:href="@{springSecurity/level1/3}">3.html</a>
+    </div>
+    <div style="float: left" sec:authorize="hasAnyRole('vip2')" >
+        <p class="level2">level2</p>
+        <hr/>
+        <a th:href="@{springSecurity/level2/1}">1.html</a>
+        <br/>
+        <a th:href="@{springSecurity/level2/2}">2.html</a>
+        <br/>
+        <a th:href="@{springSecurity/level2/3}">3.html</a>
+    </div>
+    <div style="float: left" sec:authorize="hasAnyRole('vip3')">
+        <p class="level3">level3</p>
+        <hr/>
+        <a th:href="@{springSecurity/level3/1}">1.html</a>
+        <br/>
+        <a th:href="@{springSecurity/level3/2}">2.html</a>
+        <br/>
+        <a th:href="@{springSecurity/level3/3}">3.html</a>
+    </div>
+    <div style="clear: both;display: none"></div>
+</div>
+</body>
+</html>
