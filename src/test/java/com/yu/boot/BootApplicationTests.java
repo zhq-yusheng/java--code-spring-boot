@@ -16,6 +16,7 @@ import org.springframework.core.env.Environment;
 import org.springframework.data.redis.core.RedisTemplate;
 
 import javax.mail.MessagingException;
+import javax.servlet.http.HttpServletRequest;
 import javax.sql.DataSource;
 
 
@@ -67,4 +68,5 @@ class BootApplicationTests {
         Object name = redisTemplate.opsForValue().get("name");
         System.out.println(name);
     }
+
 }

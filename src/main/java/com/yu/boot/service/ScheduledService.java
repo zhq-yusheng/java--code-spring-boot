@@ -3,7 +3,7 @@ package com.yu.boot.service;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-@Service
+/*@Service*/
 public class ScheduledService {
     /* 任务调度之定时执行
     cron表达式： 秒 分 时 月 星期几(0-7)0和7都是星期一 
