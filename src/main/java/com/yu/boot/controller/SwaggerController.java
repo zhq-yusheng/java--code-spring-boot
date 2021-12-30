@@ -13,7 +13,7 @@ public class SwaggerController {
     @ApiOperation("获得Swagger") //给这个接口加注释
     @CrossOrigin
     public TestSwagger getSwagger(){
-        return new TestSwagger();//只要接口中有实体类就会被扫描到swagger中
+        return new TestSwagger("张三","12344");//只要接口中有实体类就会被扫描到swagger中
     }
 
 

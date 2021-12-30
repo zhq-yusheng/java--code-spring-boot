@@ -50,6 +50,19 @@
         </dependency>
 
 
+        <!-- 开启rabbitMq包 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-amqp</artifactId>
+        </dependency>
+
+
+        <dependency>
+            <groupId>org.springframework.amqp</groupId>
+            <artifactId>spring-rabbit-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
 
 
         <!-- security 整合thymeleaf包 -->
@@ -82,8 +95,6 @@
             <scope>test</scope>
         </dependency>
 
-
-
         <!-- swagger包 -->
         <!-- https://mvnrepository.com/artifact/io.springfox/springfox-swagger2 -->
         <dependency>
@@ -98,10 +109,7 @@
             <version>2.9.2</version>
         </dependency>
 
-
-
-
-        <!--  shiro  -->
+       <!--  shiro  -->
         <dependency>
             <groupId>org.apache.shiro</groupId>
             <artifactId>shiro-spring</artifactId>
@@ -114,9 +122,6 @@
             <artifactId>thymeleaf-extras-shiro</artifactId>
             <version>2.0.0</version>
         </dependency>
-
-
-
 
         <dependency>
             <groupId>com.alibaba</groupId>
@@ -157,6 +162,8 @@
             <artifactId>spring-boot-configuration-processor</artifactId>
             <optional>true</optional>
         </dependency>
+
+
 
 
     </dependencies>

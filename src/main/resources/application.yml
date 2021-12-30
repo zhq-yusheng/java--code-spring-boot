@@ -46,7 +46,6 @@ spring:
     filters: stat,log4j,wall
     url: jdbc:mysql://localhost:3306/shirodb?characterEncoding=UTF-8&serverTimezone=GMT&useUnicode=true
 
-
 ---
 spring:
   profiles: securityText

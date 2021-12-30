@@ -1,7 +1,15 @@
 package com.yu.boot.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
+import java.io.File;
 
 /*@Service*/
 public class ScheduledService {
@@ -23,9 +31,9 @@ public class ScheduledService {
     详细信息查百度或者访问：https://baike.baidu.com/item/cron/10952601?fr=aladdin
 
      */
-
     @Scheduled(cron = "0/2 * * * * ?") //每隔2秒执行一次
-    public void scheduled(){
-        System.out.println("任务调度被执行了！！");
+    public void scheduled() throws MessagingException {
+        System.out.println("任务调度！！");
     }
 }
+

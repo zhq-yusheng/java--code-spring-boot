@@ -23,7 +23,6 @@ public class UserRealm extends AuthorizingRealm {
 
         System.out.println("进入了doGetAuthorizationInfo=>授权~~");
         Subject subject = SecurityUtils.getSubject(); // 获得当前那对象
-        subject.logout();
 
         // 获得 认证方法传来的数据库查询传来的ShiroUser对象
         ShiroUser user = (ShiroUser) subject.getPrincipal();
