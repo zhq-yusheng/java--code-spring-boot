@@ -31,6 +31,36 @@ public class RabbitMqConfig {
     // 死信交换机
     public static final String DEADLETTER_EXCHANGE = "deadLetter_exchange";
 
+    //延迟交换机
+    public static final String DELAYED_EXCHANGE = "delayed_exchange";
+
+    //延迟队列 其实就是一个简单的队列
+    public static final String DELAYED_QUEUE = "delayed_queue";
+
+
+    // 创建基于插件的延迟交换机 java没有直接提供这个的实现类 所以得自定义这个交换机
+    @Bean("delayedExchange")
+    public CustomExchange delayedExchange(){
+        Map<String,Object> mps = new HashMap<>();
+        mps.put("x-delayed-type","direct"); // 将延迟交换机设置直接交换机
+
+        //这个就和原生一样 交换机名字 交换机类型 是否持久化 是否自动删除 还有一个其他自定义参数
+        return new CustomExchange(DELAYED_EXCHANGE, "x-delayed-message", false, true, mps);
+    }
+
+
+    // 创建延迟的队列
+    @Bean("delayedQueue")
+    public Queue delayedQueue(){
+        return QueueBuilder.durable(DELAYED_QUEUE).build();
+    }
+
+    // 死信交换机绑定死信队列
+    @Bean
+    public Binding bingDelayed(@Qualifier("delayedExchange") CustomExchange delayedExchange,
+                            @Qualifier("delayedQueue") Queue delayedQueue){ // 这要多一步构建
+        return BindingBuilder.bind(delayedQueue).to(delayedExchange).with("delayed-key").noargs();
+    }
 
 
     // 创建普通交换机
@@ -38,6 +68,7 @@ public class RabbitMqConfig {
     public DirectExchange ordinaryExchange(){
         return new DirectExchange(ORDINARY_EXCHANGE);
     }
+
 
     // 创建死信交换机
     @Bean("deadLetterExchange")
@@ -51,7 +82,7 @@ public class RabbitMqConfig {
         Map<String, Object> maps = new HashMap<>();
         maps.put("x-dead-letter-exchange", DEADLETTER_EXCHANGE); //设置死信交换机
         maps.put("x-dead-letter-routing-key", "dead-key"); // 设置死信交换机的key
-        maps.put("x-message-ttl",10000); // 设置消息存活的时间
+        //maps.put("x-message-ttl",10000); // 设置消息存活的时间 消息发送的时候来设置消息存活时间
 
         return QueueBuilder.durable(ORDINARY_QUEUEA).withArguments(maps).build();
     }
