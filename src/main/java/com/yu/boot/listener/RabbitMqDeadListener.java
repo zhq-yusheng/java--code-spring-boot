@@ -25,4 +25,11 @@ public class RabbitMqDeadListener {
         log.info("死信队列收到消息:{}", new String(msg.getBody()));
 
     }
+
+    //@RabbitListener(queues = "ordinary_queueA")
+    private void ordinaryQueueA(Message msg, Channel channel){
+
+        log.info("普通队列A队列收到消息:{}", new String(msg.getBody()));
+
+    }
 }

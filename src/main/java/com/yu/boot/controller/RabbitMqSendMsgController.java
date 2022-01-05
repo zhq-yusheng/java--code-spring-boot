@@ -1,4 +1,5 @@
 package com.yu.boot.controller;
+import com.rabbitmq.client.AMQP;
 import com.yu.boot.config.RabbitMqConfig;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.Message;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import java.util.Date;
+import java.util.Random;
 import java.util.UUID;
 
 /**
@@ -33,8 +35,24 @@ public class RabbitMqSendMsgController {
     @GetMapping("/senMsg/{msg}")
     private String sendMsg(@PathVariable("msg") String msg){
         log.info("收到消息：{},当前系统时间：{}",msg,new Date().toLocaleString());
-        rabbitTemplate.convertAndSend("ordinary_exchange","ordinaryOne",msg);
-        rabbitTemplate.convertAndSend("ordinary_exchange","ordinaryTwo",msg);
+
+        Random random = new Random();
+        int randomInt = random.nextInt(10); // 随机生成优先级 约大越先执行
+        String msg1 = msg + "+" + randomInt;
+        CorrelationData corre = new CorrelationData();
+
+        Message message1 = new Message(msg1.getBytes(), null);
+
+        ReturnedMessage returnedMessage = new ReturnedMessage(message1, 1, "发布确认", RabbitMqConfig.DELAYED_EXCHANGE, "delayed-key");
+        corre.setReturned(returnedMessage);
+        corre.setId(UUID.randomUUID().toString());
+
+
+        rabbitTemplate.convertAndSend("ordinary_exchange","ordinaryOne", msg1,message -> {
+            message.getMessageProperties().setPriority(randomInt);
+            return message;
+        }, corre);
+        //rabbitTemplate.convertAndSend("ordinary_exchange","ordinaryTwo", msg, corre);
         return "消息发送成功";
     }
 
